@@ -1,0 +1,410 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{amsmath}
+
+\geometry{margin=2.5cm}
+\onehalfspacing
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue,
+    citecolor=blue
+}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{teal},
+    showstringspaces=false
+}
+
+\newcommand{\studentName}{Amanzholova Dilnaz}
+\newcommand{\studentID}{[Insert Student ID]}
+\newcommand{\programName}{Mathematical and Computational Sciences}
+\newcommand{\companyName}{[Insert Company Name]}
+\newcommand{\companyLocation}{Astana, Kazakhstan}
+\newcommand{\departmentName}{Data Analytics / IT Department}
+\newcommand{\advisorName}{[Insert Advisor Name]}
+\newcommand{\advisorRole}{Data Analyst / Software Engineer}
+\newcommand{\internshipDates}{[Insert Internship Dates]}
+\newcommand{\projectTitle}{Predictive Analytics System for Customer Churn Risk Assessment}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+    {\Large \textbf{Astana IT University}}\\[0.5cm]
+    {\large Faculty of Digital Transformation}\\[2cm]
+
+    {\LARGE \textbf{Industrial Practice Final Report}}\\[0.7cm]
+    {\Large \textbf{\projectTitle}}\\[2cm]
+
+    \begin{flushleft}
+    \textbf{Student Name:} \studentName \\
+    \textbf{Student ID:} \studentID \\
+    \textbf{Educational Program:} \programName \\
+    \textbf{Company:} \companyName \\
+    \textbf{Location:} \companyLocation \\
+    \textbf{Department:} \departmentName \\
+    \textbf{Workplace Advisor:} \advisorName \\
+    \textbf{Advisor Position:} \advisorRole \\
+    \textbf{Internship Dates:} \internshipDates \\
+    \end{flushleft}
+
+    \vfill
+    {\large Astana, 2026}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+This report describes the work completed during the industrial practice in the \departmentName{} of \companyName{}. The main technical contribution was the development of a machine learning prototype for customer churn risk assessment. The project involved data preprocessing, exploratory data analysis, feature engineering, model training, evaluation, and preparation of a reproducible pipeline in Python.
+
+The project is aligned with the Mathematical and Computational Sciences program because it applies statistical analysis, supervised machine learning, data modeling, and computational implementation. The final prototype supports business decision-making by identifying customers with a higher probability of leaving a service, allowing the company to prioritize retention actions.
+
+\newpage
+
+\section{Introduction}
+
+Industrial practice is an important stage of professional development because it connects theoretical university knowledge with applied workplace tasks. As a student of Mathematical and Computational Sciences, I focused on a task related to data analysis and machine learning. The objective was to design and implement a predictive analytics prototype that could estimate customer churn risk using structured tabular data.
+
+Customer churn prediction is a common business problem in telecommunications, banking, SaaS platforms, and subscription-based services. Losing existing customers can be more expensive than attracting new ones; therefore, companies often use data-driven methods to identify customers who may leave in the near future.
+
+During the internship, my role was to analyze available tabular data, build a machine learning workflow, evaluate several classification models, and document the process in a reproducible format. The main output of the internship was a Python-based churn prediction pipeline with model evaluation results and recommendations for further development.
+
+\section{Workplace Description}
+
+\subsection{Company Overview}
+
+\companyName{} is located in \companyLocation{}. The organization operates in the field of \textbf{[insert industry: IT services / data analytics / consulting / digital solutions / education technology]}. Its main business activities include \textbf{[insert activities: software development, data processing, internal automation, digital transformation, analytics reporting]}.
+
+\subsection{Department Description}
+
+The internship was completed in the \departmentName{}. The department is responsible for supporting digital and analytical processes inside the organization. Its main responsibilities include:
+
+\begin{itemize}
+    \item collecting and processing structured business data;
+    \item preparing analytical reports and dashboards;
+    \item developing small internal automation tools;
+    \item supporting database and information system workflows;
+    \item testing data-driven solutions for business decision-making.
+\end{itemize}
+
+The department used technologies such as Python, SQL, Jupyter Notebook, Git, Excel/Google Sheets, and basic data visualization tools. For machine learning experiments, Python libraries including pandas, NumPy, scikit-learn, matplotlib, and seaborn were used.
+
+\subsection{Workplace Advisor}
+
+My workplace advisor was \advisorName{}, working as a \advisorRole{}. The advisor provided technical feedback on the project direction, helped define the expected structure of the analytical pipeline, and reviewed the intermediate results of the machine learning model.
+
+\subsection{Student Position and Responsibilities}
+
+My position during the internship was \textbf{Data Analytics / Machine Learning Intern}. My responsibilities included:
+
+\begin{itemize}
+    \item studying the business problem of customer churn prediction;
+    \item preparing and cleaning tabular data;
+    \item performing exploratory data analysis;
+    \item implementing feature engineering steps;
+    \item training and comparing machine learning models;
+    \item evaluating model performance using classification metrics;
+    \item documenting the workflow and preparing technical evidence.
+\end{itemize}
+
+\section{Project Overview}
+
+\subsection{Problem Statement}
+
+The main problem addressed in this project was the prediction of customer churn. In a business context, churn means that a customer stops using the company's service. The task was formulated as a binary classification problem:
+
+\[
+    y =
+    \begin{cases}
+    1, & \text{customer churned} \\
+    0, & \text{customer remained active}
+    \end{cases}
+\]
+
+Given customer-related features such as contract duration, monthly charges, total charges, service usage, and support interactions, the goal was to predict whether a customer belongs to the churn-risk group.
+
+\subsection{Project Objectives}
+
+The project had the following objectives:
+
+\begin{enumerate}
+    \item Understand the structure of the customer dataset.
+    \item Clean missing and inconsistent values.
+    \item Encode categorical variables for machine learning models.
+    \item Train baseline and improved classification models.
+    \item Compare models using accuracy, precision, recall, F1-score, and ROC-AUC.
+    \item Identify the most important churn-related features.
+    \item Prepare a reproducible project repository and final technical report.
+\end{enumerate}
+
+\subsection{Expected Business Value}
+
+The implemented prototype can help the company identify customers who may leave. This allows managers to take preventive actions such as targeted communication, service improvement, discounts, or personalized retention campaigns. Although the prototype is not a production-level system, it demonstrates how machine learning can support operational decision-making.
+
+\section{Tools and Technologies Used}
+
+\begin{longtable}{p{4cm}p{10cm}}
+\toprule
+\textbf{Tool / Technology} & \textbf{Purpose} \\
+\midrule
+Python & Main programming language for data analysis and model development. \\
+Pandas & Loading, cleaning, filtering, and transforming tabular data. \\
+NumPy & Numerical operations and array processing. \\
+Scikit-learn & Model training, preprocessing, pipelines, and evaluation metrics. \\
+Matplotlib / Seaborn & Visualization of distributions, correlations, and model performance. \\
+Jupyter Notebook & Interactive experimentation and documentation of analysis. \\
+Git / GitHub & Version control and repository-based evidence of completed work. \\
+Overleaf / LaTeX & Preparation of the final technical report. \\
+\bottomrule
+\end{longtable}
+
+Python was selected because it is widely used in data science and machine learning. Scikit-learn was chosen because it provides reliable implementations of classical machine learning algorithms and allows fast comparison of multiple models. Jupyter Notebook was used during experimentation because it supports step-by-step analysis, visualization, and documentation.
+
+\section{System Architecture and Data Flow}
+
+The project workflow followed a standard machine learning pipeline:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/ml_pipeline.png}
+    \caption{Machine learning pipeline architecture.}
+    \label{fig:pipeline}
+\end{figure}
+
+The system consists of the following stages:
+
+\begin{enumerate}
+    \item \textbf{Data Input:} loading a CSV dataset containing customer records.
+    \item \textbf{Data Cleaning:} handling missing values, duplicates, and incorrect data types.
+    \item \textbf{Feature Engineering:} transforming categorical and numerical features.
+    \item \textbf{Model Training:} training machine learning classifiers.
+    \item \textbf{Model Evaluation:} comparing models using classification metrics.
+    \item \textbf{Result Interpretation:} analyzing important features and generating conclusions.
+\end{enumerate}
+
+\section{Technical Implementation}
+
+\subsection{Data Loading}
+
+\begin{lstlisting}[language=Python, caption={Loading the dataset}]
+import pandas as pd
+
+DATA_PATH = "data/customer_churn.csv"
+
+df = pd.read_csv(DATA_PATH)
+print(df.head())
+print(df.info())
+print(df.isnull().sum())
+\end{lstlisting}
+
+\subsection{Data Cleaning}
+
+\begin{lstlisting}[language=Python, caption={Basic data cleaning}]
+df = df.drop_duplicates()
+df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
+
+target = "Churn"
+X = df.drop(columns=[target])
+y = df[target].map({"Yes": 1, "No": 0})
+\end{lstlisting}
+
+\subsection{Preprocessing Pipeline}
+
+\begin{lstlisting}[language=Python, caption={Preprocessing pipeline}]
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+
+numeric_features = X.select_dtypes(include=["int64", "float64"]).columns
+categorical_features = X.select_dtypes(include=["object", "category"]).columns
+
+numeric_pipeline = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="median")),
+    ("scaler", StandardScaler())
+])
+
+categorical_pipeline = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("encoder", OneHotEncoder(handle_unknown="ignore"))
+])
+
+preprocessor = ColumnTransformer(transformers=[
+    ("num", numeric_pipeline, numeric_features),
+    ("cat", categorical_pipeline, categorical_features)
+])
+\end{lstlisting}
+
+\subsection{Model Training}
+
+\begin{lstlisting}[language=Python, caption={Training machine learning models}]
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, roc_auc_score
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+
+models = {
+    "Logistic Regression": LogisticRegression(max_iter=1000),
+    "Random Forest": RandomForestClassifier(
+        n_estimators=200,
+        max_depth=8,
+        random_state=42,
+        class_weight="balanced"
+    )
+}
+\end{lstlisting}
+
+\section{Results}
+
+\subsection{Model Comparison}
+
+\begin{table}[H]
+\centering
+\caption{Model performance comparison}
+\label{tab:results}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Model} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} & \textbf{ROC-AUC} \\
+\midrule
+Logistic Regression & [insert] & [insert] & [insert] & [insert] & [insert] \\
+Random Forest & [insert] & [insert] & [insert] & [insert] & [insert] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Feature Importance}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/feature_importance.png}
+    \caption{Feature importance chart.}
+    \label{fig:importance}
+\end{figure}
+
+\section{My Technical Contribution}
+
+My personal contribution during the internship included the following tasks:
+
+\begin{enumerate}
+    \item Designed the structure of the machine learning workflow.
+    \item Cleaned and prepared tabular customer data for analysis.
+    \item Implemented preprocessing pipelines for numerical and categorical features.
+    \item Trained and compared Logistic Regression and Random Forest models.
+    \item Evaluated the models using standard classification metrics.
+    \item Prepared visualizations for data exploration and model interpretation.
+    \item Documented the implementation in Jupyter Notebook and LaTeX report format.
+\end{enumerate}
+
+This contribution helped transform raw customer data into an interpretable predictive analytics prototype. The project can be further extended into a dashboard or integrated into an internal CRM system.
+
+\section{Challenges and Solutions}
+
+\subsection{Handling Mixed Data Types}
+
+One challenge was that the dataset contained both numerical and categorical variables. Directly passing such data into a machine learning model would cause errors. I solved this problem by using a ColumnTransformer with separate preprocessing pipelines for each feature type.
+
+\subsection{Class Imbalance}
+
+Customer churn datasets are often imbalanced because the number of customers who stay is usually larger than the number of customers who leave. This can make accuracy misleading. To address this, I used metrics such as precision, recall, F1-score, and ROC-AUC instead of relying only on accuracy. I also tested class weighting in the Random Forest model.
+
+\subsection{Avoiding Data Leakage}
+
+Another important challenge was avoiding data leakage. If preprocessing is applied before splitting the data, information from the test set may influence the training process. To prevent this, preprocessing was included inside the scikit-learn Pipeline, ensuring that transformations were fitted only on the training data.
+
+\section{Calendar Plan}
+
+\begin{longtable}{p{3cm}p{8cm}p{4cm}}
+\toprule
+\textbf{Week} & \textbf{Planned / Completed Tasks} & \textbf{Output} \\
+\midrule
+Week 1 & Introduction to the department, workplace tools, project topic selection, review of data analytics tasks. & Internship plan and project objective. \\
+Week 2 & Dataset inspection, initial exploratory data analysis, identification of missing values and feature types. & EDA notebook draft. \\
+Week 3 & Data cleaning, preprocessing design, encoding categorical variables, scaling numerical variables. & Preprocessing pipeline. \\
+Week 4 & Baseline model training using Logistic Regression. & First model results. \\
+Week 5 & Random Forest model training and hyperparameter adjustment. & Improved model results. \\
+Week 6 & Model evaluation using accuracy, precision, recall, F1-score, and ROC-AUC. & Evaluation table and metrics. \\
+Week 7 & Feature importance analysis, visualization, interpretation of business insights. & Charts and analytical conclusions. \\
+Week 8 & Final report preparation, GitHub repository organization, presentation planning. & Final report and presentation materials. \\
+\bottomrule
+\end{longtable}
+
+\section{Evidence of Completed Work}
+
+The following evidence should be attached to the final submission:
+
+\begin{itemize}
+    \item GitHub repository link: \url{https://github.com/[username]/customer-churn-ml-practice}
+    \item Screenshot of Jupyter Notebook execution.
+    \item Screenshot of project folder structure.
+    \item Screenshot of model evaluation output.
+    \item Generated charts: churn distribution, correlation heatmap, feature importance.
+    \item Final LaTeX report PDF.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/notebook_screenshot_placeholder.png}
+    \caption{Screenshot of Jupyter Notebook execution. Replace this placeholder with your own screenshot.}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/github_repository_placeholder.png}
+    \caption{Screenshot of GitHub repository structure. Replace this placeholder with your own screenshot.}
+\end{figure}
+
+\section{Personal Reflection}
+
+This internship helped me understand how mathematical and computational knowledge can be applied to real business problems. Before the internship, I mostly studied machine learning from an academic perspective, focusing on algorithms and formulas. During the practice, I saw that a large part of real data work is connected with data cleaning, correct preprocessing, reproducibility, and meaningful interpretation of results.
+
+One of the main lessons was that model accuracy alone is not enough. In a business problem such as churn prediction, the cost of false negatives and false positives can be different. Therefore, choosing the right evaluation metric is part of the decision-making process. I also learned the importance of pipelines because they make the code cleaner, safer, and easier to reuse.
+
+The most challenging part was building a workflow that was both technically correct and understandable for non-technical stakeholders. A model can produce numerical predictions, but those predictions become useful only when they are explained clearly and connected to business actions.
+
+Overall, the internship strengthened my interest in data science and machine learning engineering. It showed me that my background in mathematics, statistics, and programming can be useful for building analytical tools that support practical decisions.
+
+\section{Conclusion}
+
+During the industrial practice, I developed a machine learning prototype for customer churn risk assessment. The project included data preprocessing, exploratory analysis, model training, evaluation, and interpretation. The final result was a reproducible Python pipeline that can classify customers according to churn risk and provide insights into important factors influencing customer behavior.
+
+The project is directly related to Mathematical and Computational Sciences because it combines statistical reasoning, data analysis, algorithmic modeling, and software implementation. Future improvements may include hyperparameter optimization, dashboard development, database integration, and deployment as an internal web service.
+
+\section{References}
+
+\begin{enumerate}
+    \item Scikit-learn Documentation. \url{https://scikit-learn.org/stable/}
+    \item Pandas Documentation. \url{https://pandas.pydata.org/docs/}
+    \item NumPy Documentation. \url{https://numpy.org/doc/}
+    \item Matplotlib Documentation. \url{https://matplotlib.org/stable/}
+    \item Géron, A. \textit{Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow}. O'Reilly Media.
+\end{enumerate}
+
+\end{document}
